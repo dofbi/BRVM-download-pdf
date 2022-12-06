@@ -1,0 +1,25 @@
+name: BRVM download pdf
+description: A GitHub Action that download brvm.org official newsletters
+inputs:
+  source-url:
+    default: 'https://www.brvm.org/en/bulletins-officiels-de-la-cote'
+    required: true
+    description: A URL to an html page.
+  path:
+    default: '../data/pdf'
+    required: true
+    description: Path download file
+  github_token:
+    default: ${{ github.token }}
+  branch:
+    default: ${{ github.event.repository.default_branch }}
+    description: The target branch to update.
+  empty-commits:
+    default: 'true'
+    description: set to `false` to disallow empty commits when there are no changes
+runs:
+  using: node12
+  main: dist/index.js
+branding:
+  icon: activity
+  color: red
