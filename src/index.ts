@@ -1,7 +1,7 @@
 import { Toolkit } from 'actions-toolkit'
 import scrapeIt = require("scrape-it")
 import moment from 'moment'
-
+import 'moment/min/locales'
 import fs from 'fs';
 import path from 'path'
 const { DownloaderHelper } = require('node-downloader-helper')
@@ -11,6 +11,8 @@ interface Inputs {
   'path': string
   [key: string]: string
 }
+
+moment.locale('fr')
 
 console.log("---------------------Get Data---------------------")
 
@@ -59,7 +61,7 @@ async function downloader(file: any,pathname: string) {
 
 Toolkit.run<Inputs>(async tools => {
   // Prepare some options
-  const sourceUrl = tools.inputs['source-url'] || 'https://www.brvm.org/en/bulletins-officiels-de-la-cote'
+  const sourceUrl = tools.inputs['source-url'] || 'https://www.brvm.org/fr/bulletins-officiels-de-la-cote'
   const path = tools.inputs['path'] || '../data/pdf'
 
   scrapeIt(sourceUrl, {
@@ -68,7 +70,9 @@ Toolkit.run<Inputs>(async tools => {
         ,data: {
             date: {
             selector: "td.views-field.views-field-title",
-            convert: date => moment(date.replace(/Daily Market Report - /g,''),'MMMM D YYYY').format("YYYY-MM-DD")
+            convert: date => {
+              return moment(date.replace(/Bulletin Officiel de la Cote du /g,''),'D MMMM YYYY').format("YYYY-MM-DD")
+            }
             },
             url: {
                 selector: "a"

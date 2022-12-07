@@ -2,7 +2,7 @@ name: BRVM download pdf
 description: A GitHub Action that download brvm.org official newsletters
 inputs:
   source-url:
-    default: 'https://www.brvm.org/en/bulletins-officiels-de-la-cote'
+    default: 'https://www.brvm.org/fr/bulletins-officiels-de-la-cote'
     required: true
     description: A URL to an html page.
   path:
